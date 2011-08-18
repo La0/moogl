@@ -67,33 +67,10 @@ WebGL = new Class({
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
   },
 
-  mvMatrixStack: [],
-  initMVMatrix:function(src){
-    this.mvMatrixStack = [];
-    this.mvMatrix = this.storeMVMatrix(src);
-  },
+  bindCamera:function(){
 
-  storeMVMatrix:function(src) {
-    var copy = mat4.create();
-    mat4.set(src || this.mvMatrix, copy);
-    this.mvMatrixStack.push(copy);
-    return copy;
-  },
+    this.shader.bindVar("uMVMatrix", this.camera.matrix);
 
-  restoreMVMatrix:function() {
-    if (this.mvMatrixStack.length == 0)
-        throw "Invalid popMatrix!";
-    this.mvMatrix = this.mvMatrixStack.pop();
-  },
-
-  sendMVMatrix:function(matrix){
-
-    var normalMatrix = mat3.create();
-    mat4.toInverseMat3(this.mvMatrix, normalMatrix);
-    mat3.transpose(normalMatrix);
-
-    this.shader.bindVar("uMVMatrix", this.mvMatrix);
-    this.shader.bindVar("uNMatrix", normalMatrix);
   },
 
   setPerspective:function(angle, min, max){
@@ -108,7 +85,8 @@ WebGL = new Class({
   },
 
   draw:function(cube){
-    this.initMVMatrix(this.camera.matrix);
+
+    this.bindCamera();
 
       //apply camera matrix to lighting vector
     var ld = vec3.create(this.lightingDirection);
@@ -121,11 +99,7 @@ WebGL = new Class({
 
 
     Array.each(this.elements, function(form){
-      this.storeMVMatrix();
-      mat4.multiply(this.mvMatrix, form.coordinates);
-      this.sendMVMatrix();
-      this.restoreMVMatrix();
-
+      this.shader.bindVar("uElementMatrix", form.coordinates);
       form.draw();
     }.bind(this));
 
