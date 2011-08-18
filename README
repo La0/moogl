@@ -1,4 +1,5 @@
 A basic WebGL engine in mootools style.
+Demo on http://moogl.exyks.org/
 
 I do not aim for speed, but for code simplicity.
 
@@ -17,4 +18,3 @@ Current status is :
 
 Note, moogl is mootools-webgl / sound like "moogle", so for now, i'll use the fluffy Final Fantasy creature as subtle logo
 * http://en.wikipedia.org/wiki/Character_design_of_Final_Fantasy#Moogle
-* 
