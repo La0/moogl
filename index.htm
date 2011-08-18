@@ -150,6 +150,7 @@ function webGLStart() {
   //webgl.addEvent('textureReady', function(){  });
 
   webgl.camera.setControlStyle(Camera.controlStyle.mouselook);
+  webgl.camera.translate([0,0,20]);
 
   webgl.addEvent('animate', function(elapsed){
     webgl.camera.animate(elapsed);
