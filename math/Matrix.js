@@ -1,0 +1,4 @@
+
+Triangle = new Class({
+
+});
