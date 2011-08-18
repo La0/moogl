@@ -1,0 +1,20 @@
+A basic WebGL engine in mootools style.
+
+I do not aim for speed, but for code simplicity.
+
+It's a simple wrapper/tookit/helper around webGL (low level of abstraction), and as so, might be use in a educational way when learning webGL.
+
+
+I wrote this code while reading this blog http://learningwebgl.com/, which is a very clear source of information for 3D /webGL beginners.
+
+
+Current status is : 
+    * blank page
+->  * working draft
+    * API sealed
+    * alpha release
+
+
+Note, moogl is mootools-webgl / sound like "moogle", so for now, i'll use the fluffy Final Fantasy creature as subtle logo
+* http://en.wikipedia.org/wiki/Character_design_of_Final_Fantasy#Moogle
+* 
