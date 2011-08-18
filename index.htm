@@ -37,7 +37,6 @@
     attribute vec2 aTextureCoord;
 
     uniform mat4 uMVMatrix;
-    uniform mat4 uElementMatrix;
     uniform mat4 uPMatrix;
     uniform mat3 uNMatrix;
 
@@ -52,7 +51,7 @@
     varying vec3 vLightWeighting;
 
     void main(void) {
-        gl_Position = uPMatrix * uMVMatrix * uElementMatrix *  vec4(aVertexPosition, 1.0);
+        gl_Position = uPMatrix * uMVMatrix  *  vec4(aVertexPosition, 1.0);
         vTextureCoord = aTextureCoord;
 
         if (!uUseLighting) {
@@ -104,8 +103,10 @@ function webGLStart() {
       parseFloat(document.id("lightDirectionZ").value)
     ];
     webgl.lightingDirection = vec3.create();
-    vec3.normalize(tmp, this.lightingDirection);
-    vec3.scale(this.lightingDirection, -1);
+    vec3.normalize(tmp, webgl.lightingDirection);
+    vec3.scale(webgl.lightingDirection, -1);
+
+
 
     webgl.directionalColor = [
       parseFloat(document.id("directionalR").value),
@@ -150,7 +151,8 @@ function webGLStart() {
   //webgl.addEvent('textureReady', function(){  });
 
   webgl.camera.setControlStyle(Camera.controlStyle.mouselook);
-  webgl.camera.translate([0,0,20]);
+  webgl.camera.translate([0,0,30]);
+  webgl.camera.rotate(15, [1,0,0]);
 
   webgl.addEvent('animate', function(elapsed){
     webgl.camera.animate(elapsed);
@@ -206,9 +208,9 @@ body, html {
     <table style="border: 0; padding: 10px;">
         <tr>
             <td><b>Direction:</b>
-            <td>X: <input type="text" id="lightDirectionX" value="-0.25" />
-            <td>Y: <input type="text" id="lightDirectionY" value="-0.25" />
-            <td>Z: <input type="text" id="lightDirectionZ" value="-1.0" />
+            <td>X: <input type="text" id="lightDirectionX" value="0" />
+            <td>Y: <input type="text" id="lightDirectionY" value="0" />
+            <td>Z: <input type="text" id="lightDirectionZ" value="-1" />
 
         </tr>
         <tr>

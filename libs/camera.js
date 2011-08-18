@@ -70,6 +70,8 @@ Camera = new Class({
     if(this.coords.yRot) mat4.rotate(this.matrix, -degToRad(this.coords.yRot), [0,1,0]);
     if(this.coords.zRot) mat4.rotate(this.matrix, -degToRad(this.coords.zRot), [0,0,1]);
 
+    //vector transformation need only rotation
+    this.rotation = mat4.create(this.matrix);
 
     mat4.translate(this.matrix, [ -this.coords.X, -this.coords.Y, -this.coords.Z]);
 

@@ -67,13 +67,32 @@ WebGL = new Class({
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
   },
 
-  bindCamera:function(){
+  mvMatrixStack: [],
+  initMVMatrix:function(src){
+    this.mvMatrixStack = [];
+    this.mvMatrix = this.storeMVMatrix(src);
+  },
+
+  storeMVMatrix:function(src) {
+    var copy = mat4.create();
+    mat4.set(src || this.mvMatrix, copy);
+    this.mvMatrixStack.push(copy);
+    return copy;
+  },
+
+  restoreMVMatrix:function() {
+    if (this.mvMatrixStack.length == 0)
+        throw "Invalid popMatrix!";
+    this.mvMatrix = this.mvMatrixStack.pop();
+  },
+
+  sendMVMatrix:function(matrix){
 
     var normalMatrix = mat3.create();
-    mat4.toInverseMat3(this.camera.matrix, normalMatrix);
+    mat4.toInverseMat3(this.mvMatrix, normalMatrix);
     mat3.transpose(normalMatrix);
 
-    this.shader.bindVar("uMVMatrix", this.camera.matrix);
+    this.shader.bindVar("uMVMatrix", this.mvMatrix);
     this.shader.bindVar("uNMatrix", normalMatrix);
   },
 
@@ -89,11 +108,24 @@ WebGL = new Class({
   },
 
   draw:function(cube){
+    this.initMVMatrix(this.camera.matrix);
 
-    this.bindCamera();
+      //apply camera matrix to lighting vector
+    var ld = vec3.create(this.lightingDirection);
+    mat4.multiplyVec3(this.camera.rotation, ld);
+
+    this.shader.bindVar("uUseLighting", true);
+    this.shader.bindVar("uAmbientColor", this.ambiantColor);
+    this.shader.bindVar("uLightingDirection", ld);
+    this.shader.bindVar("uDirectionalColor", this.directionalColor);
+
 
     Array.each(this.elements, function(form){
-      this.shader.bindVar("uElementMatrix", form.coordinates);
+      this.storeMVMatrix();
+      mat4.multiply(this.mvMatrix, form.coordinates);
+      this.sendMVMatrix();
+      this.restoreMVMatrix();
+
       form.draw();
     }.bind(this));
 
@@ -103,13 +135,11 @@ WebGL = new Class({
 
   drawElement:function(form){
 
-
     this.shader.bindBuffer('aVertexPosition', form.vertices);
     this.shader.bindBuffer('aVertexNormal', form.normals);
 
     if(false)
       this.shader.bindBuffer('vertexColorAttribute', form.colors);
-
 
     if(true){ //texture
       this.shader.bindBuffer('aTextureCoord', form.texture.buffer);
@@ -119,12 +149,6 @@ WebGL = new Class({
       this.shader.bindVar('uSampler', 0);
     }
 
-    if(true){
-      this.shader.bindVar("uUseLighting", true);
-      this.shader.bindVar("uAmbientColor", this.ambiantColor);
-      this.shader.bindVar("uLightingDirection", this.lightingDirection);
-      this.shader.bindVar("uDirectionalColor", this.directionalColor);
-    }
 
     this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, form.triangles);
     this.gl.drawElements(this.gl.TRIANGLES, form.triangles.numItems, this.gl.UNSIGNED_SHORT, 0);
