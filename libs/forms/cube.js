@@ -8,7 +8,7 @@ Cube = new Class({
     this.parent(webgl);
 
 
-    this.vertices = this.webgl.createPositionBuffer([
+    this.setVertices([
       //front
       -1, 1, 1,   //A
       1, 1, 1,    //B
@@ -46,7 +46,7 @@ Cube = new Class({
       1, -1, 1   //C
     ]);
 
-    this.triangles = this.webgl.createTriangleBuffer([
+    this.setTriangles([
       0,3,1,   1,3,2,        //front
       7,4,5,    7,5,6,       //back
       8,9,10,   8,10,11,     //left
@@ -55,7 +55,7 @@ Cube = new Class({
       20,21,22,  20,22,23    //bottom
     ]);
 
-    this.normals = this.webgl.createNormalBuffer([
+    this.setNormals([
       // Front face
        0, 0, 1,
        0, 0, 1,
@@ -96,7 +96,7 @@ Cube = new Class({
   },
 
   setTexture:function(src){
-    this.texture = this.webgl.createTexture(src, [
+    this.parent(src, [
 
 0,0,
 1,0,

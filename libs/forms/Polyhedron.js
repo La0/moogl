@@ -41,7 +41,23 @@ Polyhedron  = new Class({
   },
 
 
+  setVertices:function(vertices){
+    this.vertices = this.webgl.createPositionBuffer(vertices);
+  },
 
+  setTriangles:function(triangles){
+    this.triangles = this.webgl.createTriangleBuffer(triangles);
+  },
+
+  setNormals:function(normals){
+    this.normals = this.webgl.createNormalBuffer(normals);
+  },
+
+
+  setTexture:function(src, coords){
+ 
+    this.texture = this.webgl.createTexture(src, coords);
+  },
 
 
 
