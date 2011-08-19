@@ -2,43 +2,11 @@
 
 
 Cube = new Class({
-
-  webgl:false,
-
-  coordinates : null,
-
-
-
-  resetPosition:function(){
-    mat4.identity(this.coordinates);
-  },
-
-  position:function(coord){
-    this.resetPosition();
-    this.translate(coord);
-  },
-
-  translate:function(vector){
-    mat4.translate(this.coordinates, vector);
-  },
-
-  rotate:function(angle, vector){
-    mat4.rotate(this.coordinates, degToRad(angle), vector);
-  },
-
-
-
-  vertices :null,
-  triangles:null,
-  colors:null,
-  texture:null,
-  normals:null,
+  Extends:Polyhedron,
 
   initialize:function(webgl){
-    this.webgl = webgl;
+    this.parent(webgl);
 
-    this.coordinates = mat4.create();
-    this.resetPosition();
 
     this.vertices = this.webgl.createPositionBuffer([
       //front
@@ -126,6 +94,7 @@ Cube = new Class({
     ]);
 
   },
+
   setTexture:function(src){
     this.texture = this.webgl.createTexture(src, [
 
@@ -161,11 +130,6 @@ Cube = new Class({
 
     ]);
 
-  },
-
-  draw:function(){
-
-    this.webgl.drawElement(this);
   },
 
   setColors:function(front, back, left, right, top, bottom){
