@@ -1,5 +1,13 @@
-* Fix lighning model
+* Make the lighting source move
+* Basic collision detection
+* floor & ceiling ?
+* adjust horizontal mouse sensitivity ?
 
 
 
 * Seal & write APIs
+
+==== DONE ====
+
+* Create map loader (basic polyhedron from 2bit bitmaps)
+* Fix lighning model 
