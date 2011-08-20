@@ -1,4 +1,4 @@
-Polyhedron  = new Class({
+BaseMesh  = new Class({
   webgl:false,
   coordinates : null,
   vertices :null,

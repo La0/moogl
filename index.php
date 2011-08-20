@@ -10,8 +10,8 @@
 <script type="text/javascript" src="3rd/mootools-patchs.js">;</script>
 <script type="text/javascript" src="3rd/glMatrix-0.9.5.min.js">;</script>
 <script type="text/javascript" src="3rd/webgl-utils.js">;</script>
-<script type="text/javascript" src="libs/forms/Polyhedron.js">;</script>
-<script type="text/javascript" src="libs/forms/cube.js">;</script>
+<script type="text/javascript" src="libs/mesh/base.js">;</script>
+<script type="text/javascript" src="libs/mesh/cube.js">;</script>
 <script type="text/javascript" src="libs/webgl.js">;</script>
 <script type="text/javascript" src="libs/shader.js">;</script>
 <script type="text/javascript" src="libs/camera.js">;</script>
@@ -127,7 +127,7 @@ function webGLStart() {
 
 
 
-  var poly = new Polyhedron(webgl);
+  var poly = new BaseMesh(webgl);
   poly.load(data, "crate_.gif");
 
   webgl.stackElement(poly);

@@ -2,7 +2,7 @@
 
 
 Cube = new Class({
-  Extends:Polyhedron,
+  Extends:BaseMesh,
 
   initialize:function(webgl){
     this.parent(webgl);
