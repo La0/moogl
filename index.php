@@ -123,20 +123,15 @@ function webGLStart() {
   });
 
 
-  for(var y=0;y<10;y+=2){
-    var cubes = [
-      [-5,y, -5],
-      [5, y, -5],
-      [-5,y, 5],
-      [5, y, 5],
-    ];
-    Array.each(cubes, function(position){
-      var cube = new Cube(webgl);
-      cube.setTexture("crate.gif");
-      cube.position(position);
-      webgl.stackElement(cube);
-    });
-  }
+  var data = <?include "gen.php"?>;
+
+
+
+  var poly = new Polyhedron(webgl);
+  poly.load(data, "crate_.gif");
+
+  webgl.stackElement(poly);
+
 
     //rotating cube !
   var cube = new Cube(webgl);
@@ -153,8 +148,8 @@ function webGLStart() {
   //webgl.addEvent('textureReady', function(){  });
 
   webgl.camera.setControlStyle(Camera.controlStyle.mouselook);
-  webgl.camera.translate([0,0,30]);
-  webgl.camera.rotate(15, [1,0,0]);
+  webgl.camera.translate([10,1.7,30]);
+  webgl.camera.rotate(11, [1,0,0]);
 
   webgl.addEvent('animate', function(elapsed){
     webgl.camera.animate(elapsed);
@@ -194,15 +189,20 @@ body, html {
 <body onload="webGLStart();">
 
 
-<div>
+<div style="float:left">
     <canvas id="lesson02-canvas" style="border: none;margin:auto;" width="800" height="400"></canvas>
 </div>
 
-
+<div style="float:right">
 <h1>Moogl</h1>
 <p>A mootools style webGL engine</p>
 <p>Use cursors key to move around, mouselook to change camera orientation</p>
 <p>Find code on <a href='https://github.com/131/moogl'>github</a>
+
+<p> This is a demo of auto generated map from this picture : <img src="map.png" style="width:100px;height:100px"/>
+</p>
+
+</div>
 
 <div style="width:500px;height:500px;float:right;display:none">
     <h2>Directional light:</h2>

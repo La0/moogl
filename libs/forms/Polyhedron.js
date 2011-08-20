@@ -59,6 +59,12 @@ Polyhedron  = new Class({
     this.texture = this.webgl.createTexture(src, coords);
   },
 
+  load:function(all, texture){
+    this.setVertices(all.vertices);
+    this.setTriangles(all.triangles);
+    this.setNormals(all.normals);
+    this.setTexture(texture, all.textures);
+  },
 
 
 });
