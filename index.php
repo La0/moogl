@@ -12,6 +12,7 @@
 <script type="text/javascript" src="3rd/webgl-utils.js">;</script>
 <script type="text/javascript" src="libs/mesh/base.js">;</script>
 <script type="text/javascript" src="libs/mesh/cube.js">;</script>
+<script type="text/javascript" src="libs/mesh/sphere.js">;</script>
 <script type="text/javascript" src="libs/webgl.js">;</script>
 <script type="text/javascript" src="libs/shader.js">;</script>
 <script type="text/javascript" src="libs/camera.js">;</script>
@@ -134,9 +135,9 @@ function webGLStart() {
 
 
     //rotating cube !
-  var cube = new Cube(webgl);
-  cube.setTexture("crate.gif");
-    cube.position([0,10,0]);
+  var cube = new Sphere(webgl);
+  cube.setTexture("moon.gif");
+    cube.position([0,0,0]);
   webgl.stackElement(cube);
   webgl.addEvent('animate', function(elapsed){
     var speed=  30/1000;
